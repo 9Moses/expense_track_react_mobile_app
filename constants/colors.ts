@@ -25,6 +25,7 @@ const forestTheme = {
   shadow: "#000000",
 };
 
+
 const purpleTheme = {
   primary: "#6A1B9A",
   background: "#F3E5F5",
@@ -50,13 +51,43 @@ const oceanTheme = {
   card: "#FFFFFF",
   shadow: "#000000",
 };
+const darkTheme = {
+  primary: "#8B5CF6",       // Violet-500 – premium feel
+  background: "#000000",    // Pure black
+  text: "#E2E8F0",          // Soft near-white
+  textLight: "#94A3B8",
+  border: "#1F1F1F",
+  white: "#171717",         // Very dark gray cards
+  card: "#171717",
+  shadow: "rgba(0, 0, 0, 0.6)",
+  expense: "#FF453A",
+  income: "#32D74B",
+  
+};
+
+const whiteTheme = {
+  primary: "#4F46E5",        // Indigo-600
+  background: "#FFFFFF",
+  surface: "#FFFFFF",
+  text: "#0F172A",           // Almost black for max contrast
+  textLight: "#64748B",
+  border: "#E5E7EB",         // Very light gray
+  card: "#FFFFFF",
+  shadow: "rgba(0, 0, 0, 0.1)",
+  hover: "#F9FAFB",
+  expense: "#DC2626",
+  income: "#16A34A",
+  white: "#FFFFFF",
+};
 
 export const THEMES = {
   coffee: coffeeTheme,
   forest: forestTheme,
   purple: purpleTheme,
   ocean: oceanTheme,
+  dark: darkTheme,
+  white: whiteTheme
 };
 
 // 👇 change this to switch theme
-export const COLORS = THEMES.coffee;
+export const COLORS = THEMES.white;
