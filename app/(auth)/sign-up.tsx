@@ -1,12 +1,13 @@
 import { useState } from "react";
-import {  Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { Link, RelativePathString, useRouter } from "expo-router";
 import { styles } from "@/assets/styles/auth.styles";
 import { COLORS } from "@/constants/colors";
 import { Ionicons } from "@expo/vector-icons";
-import {Image } from "expo-image";
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scrollview"
+import { Image } from "expo-image";
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -63,15 +64,16 @@ export default function SignUpScreen() {
         console.error(JSON.stringify(signUpAttempt, null, 2));
         setError("Invalid email or password");
       }
-    } catch (err:any) {
+    } catch (err: any) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
 
       // Extract real Clerk error message
-    const clerkError = err.errors?.[0]?.message || "Invalid email or password";
+      const clerkError =
+        err.errors?.[0]?.message || "Invalid email or password";
 
-    setError(clerkError); // show the exact message
+      setError(clerkError); // show the exact message
     }
   };
 
@@ -103,9 +105,20 @@ export default function SignUpScreen() {
   }
 
   return (
-    <KeyboardAwareScrollView style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+    <KeyboardAvoidingView
+      style={{ flex: 1 }}
+      behavior={Platform.OS === "android" ? "height" : "padding"}
+      keyboardVerticalOffset={Platform.OS === "android" ? 0 : 40}
+    >
+      <ScrollView 
+        contentContainerStyle={{ flexGrow: 1 }}
+        keyboardShouldPersistTaps="handled"
+      >
       <View style={styles.container}>
-      <Image source={require("@/assets/images/revenue-i2.png")} style={styles.illustration} />
+        <Image
+          source={require("@/assets/images/revenue-i2.png")}
+          style={styles.illustration}
+        />
         {error ? (
           <View style={styles.errorBox}>
             <Ionicons name="alert-circle" size={24} color={COLORS.expense} />
@@ -118,7 +131,7 @@ export default function SignUpScreen() {
 
         <Text style={styles.title}>Create Account</Text>
         <TextInput
-        style={[styles.input, error && styles.errorInput]}
+          style={[styles.input, error && styles.errorInput]}
           autoCapitalize="none"
           value={emailAddress}
           placeholder="Enter email"
@@ -126,7 +139,7 @@ export default function SignUpScreen() {
           onChangeText={(email) => setEmailAddress(email)}
         />
         <TextInput
-        style={[styles.input, error && styles.errorInput]}
+          style={[styles.input, error && styles.errorInput]}
           value={password}
           placeholder="Enter password"
           secureTextEntry={true}
@@ -144,6 +157,7 @@ export default function SignUpScreen() {
           </Link>
         </View>
       </View>
-    </KeyboardAwareScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }

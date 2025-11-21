@@ -6,7 +6,8 @@ import { styles } from '@/assets/styles/auth.styles'
 import { COLORS } from '@/constants/colors'
 import { Ionicons } from '@expo/vector-icons'
 import { Image } from 'expo-image'
-import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scrollview"
+import { KeyboardAvoidingView, Platform, ScrollView } from "react-native";
+
 
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn()
@@ -44,7 +45,15 @@ const onSignInPress = async () => {
 };
 
   return (
-    <KeyboardAwareScrollView style={{flex:1, alignItems: 'center', justifyContent: 'center'}}>
+    <KeyboardAvoidingView
+         style={{ flex: 1 }}
+         behavior={Platform.OS === "android" ? "height" : "padding"}
+         keyboardVerticalOffset={Platform.OS === "android" ? 0 : 40}
+       >
+         <ScrollView 
+           contentContainerStyle={{ flexGrow: 1 }}
+           keyboardShouldPersistTaps="handled"
+         >
     <View style={styles.container}>
       <Image source={require("@/assets/images/revenue-i1.png")} style={styles.illustration} />
       {error ? (
@@ -76,12 +85,15 @@ const onSignInPress = async () => {
       <TouchableOpacity style={styles.button} onPress={onSignInPress}>
         <Text style={styles.buttonText}>Sign in</Text>
       </TouchableOpacity>
+
       <View style={styles.footerContainer}>
+          <Text style={styles.footerText}>Do have an account?</Text>
         <Link href="/sign-up">
           <Text style={styles.linkText}>Sign up</Text>
         </Link>
       </View>
     </View>
-    </KeyboardAwareScrollView>
+   </ScrollView>
+       </KeyboardAvoidingView>
   )
 }
