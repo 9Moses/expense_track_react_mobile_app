@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import {  Text, TextInput, TouchableOpacity, View } from "react-native";
 import { useSignUp } from "@clerk/clerk-expo";
 import { Link, RelativePathString, useRouter } from "expo-router";
 import { styles } from "@/assets/styles/auth.styles";
 import { COLORS } from "@/constants/colors";
 import { Ionicons } from "@expo/vector-icons";
+import {Image } from "expo-image";
+import {KeyboardAwareScrollView} from "react-native-keyboard-aware-scrollview"
 
 export default function SignUpScreen() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -59,15 +61,21 @@ export default function SignUpScreen() {
         // If the status is not complete, check why. User may need to
         // complete further steps.
         console.error(JSON.stringify(signUpAttempt, null, 2));
+        setError("Invalid email or password");
       }
-    } catch (err) {
+    } catch (err:any) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       console.error(JSON.stringify(err, null, 2));
+
+      // Extract real Clerk error message
+    const clerkError = err.errors?.[0]?.message || "Invalid email or password";
+
+    setError(clerkError); // show the exact message
     }
   };
 
-  if (true) {
+  if (pendingVerification) {
     return (
       <View style={styles.verificationContainer}>
         <Text style={styles.verificationTitle}>Verify your email</Text>
@@ -95,31 +103,47 @@ export default function SignUpScreen() {
   }
 
   return (
-    <View>
-      <>
-        <Text>Sign up</Text>
+    <KeyboardAwareScrollView style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
+      <View style={styles.container}>
+      <Image source={require("@/assets/images/revenue-i2.png")} style={styles.illustration} />
+        {error ? (
+          <View style={styles.errorBox}>
+            <Ionicons name="alert-circle" size={24} color={COLORS.expense} />
+            <Text style={styles.errorText}>{error}</Text>
+            <TouchableOpacity onPress={() => setError("")}>
+              <Ionicons name="close" size={24} color={COLORS.textLight} />
+            </TouchableOpacity>
+          </View>
+        ) : null}
+
+        <Text style={styles.title}>Create Account</Text>
         <TextInput
+        style={[styles.input, error && styles.errorInput]}
           autoCapitalize="none"
           value={emailAddress}
           placeholder="Enter email"
+          placeholderTextColor="#494847b9"
           onChangeText={(email) => setEmailAddress(email)}
         />
         <TextInput
+        style={[styles.input, error && styles.errorInput]}
           value={password}
           placeholder="Enter password"
           secureTextEntry={true}
+          placeholderTextColor="#494847b9"
           onChangeText={(password) => setPassword(password)}
         />
-        <TouchableOpacity onPress={onSignUpPress}>
-          <Text>Continue</Text>
+        <TouchableOpacity style={styles.button} onPress={onSignUpPress}>
+          <Text style={styles.buttonText}>Sign Up</Text>
         </TouchableOpacity>
-        <View style={{ display: "flex", flexDirection: "row", gap: 3 }}>
-          <Text>Already have an account?</Text>
+
+        <View style={styles.footerContainer}>
+          <Text style={styles.footerText}>Already have an account?</Text>
           <Link href={"/sign-in" as RelativePathString}>
-            <Text>Sign in</Text>
+            <Text style={styles.linkText}>Sign in</Text>
           </Link>
         </View>
-      </>
-    </View>
+      </View>
+    </KeyboardAwareScrollView>
   );
 }

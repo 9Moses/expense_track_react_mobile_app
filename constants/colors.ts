@@ -66,7 +66,7 @@ const darkTheme = {
 };
 
 const whiteTheme = {
-  primary: "#4F46E5",        // Indigo-600
+  primary: "#0F172A",        // Indigo-600
   background: "#FFFFFF",
   surface: "#FFFFFF",
   text: "#0F172A",           // Almost black for max contrast
