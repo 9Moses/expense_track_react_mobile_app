@@ -1,9 +1,11 @@
 import SafeScreen from "@/components/SafeScreen";
-import { Slot, Stack } from "expo-router";
+import { Slot,  Stack } from "expo-router";
 import { ClerkProvider } from '@clerk/clerk-expo'
 import { tokenCache } from '@clerk/clerk-expo/token-cache'
+import { useEffect, useState } from "react";
 
 export default function RootLayout() {
+
   return (
      <ClerkProvider tokenCache={tokenCache}>
     <SafeScreen>
