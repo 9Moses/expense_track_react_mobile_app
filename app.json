@@ -1,11 +1,11 @@
 {
   "expo": {
     "name": "Expense Tracker",
-    "slug": "mobile",
+    "slug": "Expense Tracker",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/expense.png",
-    "scheme": "mobile",
+    "scheme": "Expense Tracker",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
@@ -42,6 +42,10 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "apiUrl": "process.env.EXPO_PUBLIC_API_URL"
     }
+
   }
 }
