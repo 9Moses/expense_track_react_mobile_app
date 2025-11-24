@@ -91,6 +91,16 @@ export const styles = StyleSheet.create({
     letterSpacing: 2,
   },
 
+  buttonDisabled: {
+    opacity: 0.7,
+  },
+  loadingContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 8,
+  },
+
   // 🔴 Error styles
   errorBox: {
     backgroundColor: "#FFE5E5",
@@ -109,4 +119,59 @@ export const styles = StyleSheet.create({
     flex: 1,
     fontSize: 14,
   },
+  verificationSubtitle: {
+    fontSize: 16,
+    textAlign: 'center',
+    marginBottom: 40,
+    color: '#6B7280',
+  },
+  codeContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginBottom: 40,
+    paddingHorizontal: 10,
+  },
+  codeInput: {
+    width: 50,
+    height: 60,
+    borderWidth: 2,
+    borderColor: '#E5E7EB',
+    borderRadius: 12,
+    backgroundColor: '#F9FAFB',
+    fontSize: 24,
+    fontWeight: '600',
+    color: '#1F2937',
+    textAlign: 'center',
+    padding: 10,
+    marginHorizontal: 5,
+  },
+  codeInputFilled: {
+    borderColor: '#6366F1',
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#6366F1',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  codeInputError: {
+    borderColor: '#EF4444',
+  },
+  resendContainer: {
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  resendText: {
+    fontSize: 14,
+    color: '#6B7280',
+  },
+  resendLink: {
+    color: '#6366F1',
+    fontWeight: '600',
+  },
+  // ... your existing styles ...
+  
 });
