@@ -25,11 +25,12 @@ export const styles = StyleSheet.create({
     alignItems: "center",
   },
   headerLogo: {
-    width: 75,
-    height: 75,
+    width: 45,
+    height: 45,
   },
   welcomeContainer: {
     flex: 1,
+    paddingLeft: 4
   },
   welcomeText: {
     fontSize: 14,
