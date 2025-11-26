@@ -13,29 +13,36 @@ interface Summary {
     };
   };
 }
+
 const BalanceCard = ({ summary }: { summary: Summary }) => {
-  const balance = summary.payload.data.balance;
-  const income = summary.payload.data.income;
-  const expense = summary.payload.data.expense;
+  const safeNumber = (val: any) => Number(val) || 0;
+
+  const balance = safeNumber(summary?.payload?.data?.balance);
+  const income = safeNumber(summary?.payload?.data?.income);
+  const expense = safeNumber(summary?.payload?.data?.expense);
+
   return (
     <View style={styles.balanceCard}>
       <Text style={styles.balanceTitle}>Total Balance</Text>
+
       <Text style={styles.balanceAmount}>
-        ₵{parseFloat(balance.toString()).toFixed(2)}
+        ₵{balance.toFixed(2)}
       </Text>
+
       <View style={styles.balanceStats}>
         <View style={styles.balanceStatItem}>
           <Text style={styles.balanceStatLabel}>Income</Text>
           <Text style={[styles.balanceStatAmount, { color: COLORS.income }]}>
-            +₵{parseFloat(income.toString()).toFixed(2)}
+            +₵{income.toFixed(2)}
           </Text>
         </View>
-        <View style={[styles.balanceStatItem, styles.statDivider]} />
-        
+
+        <View style={[ styles.statDivider]} />
+
         <View style={styles.balanceStatItem}>
           <Text style={styles.balanceStatLabel}>Expense</Text>
           <Text style={[styles.balanceStatAmount, { color: COLORS.expense }]}>
-            -₵{Math.abs(parseFloat(expense.toString())).toFixed(2)}
+            -₵{Math.abs(expense).toFixed(2)}
           </Text>
         </View>
       </View>
