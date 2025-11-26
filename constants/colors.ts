@@ -73,7 +73,7 @@ const whiteTheme = {
   textLight: "#64748B",
   border: "#E5E7EB",         // Very light gray
   card: "#FFFFFF",
-  shadow: "rgba(0, 0, 0, 0.1)",
+  shadow: "rgba(0, 0, 0, 0.7)",
   hover: "#F9FAFB",
   expense: "#DC2626",
   income: "#16A34A",

@@ -1,4 +1,5 @@
 import { styles } from '@/assets/styles/home.styles'
+import BalanceCard from '@/components/BalanceCard'
 import PageLoader from '@/components/PageLoader'
 import { SignOutButton } from '@/components/SignOutButton'
 import { useTransaction } from '@/hooks/useTransaction'
@@ -53,6 +54,8 @@ export default function Page() {
             </View>
           </View>
         </View>
+
+        <BalanceCard summary={summary}/>
       </View>
     </View>
   )
