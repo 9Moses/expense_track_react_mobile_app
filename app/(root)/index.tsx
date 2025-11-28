@@ -1,16 +1,17 @@
 import { styles } from "@/assets/styles/home.styles";
 import BalanceCard from "@/components/BalanceCard";
 import { CustomAlert } from "@/components/CustomAlert";
+import NoTransactionsFound from "@/components/NoTransactionFound";
 import PageLoader from "@/components/PageLoader";
 import { SignOutButton } from "@/components/SignOutButton";
 import TransactionItem from "@/components/TransactionItem";
 import { useTransaction } from "@/hooks/useTransaction";
-import {  useUser } from "@clerk/clerk-expo";
+import { useUser } from "@clerk/clerk-expo";
 import { Ionicons } from "@expo/vector-icons";
 import { Image } from "expo-image";
 import { Link, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, RefreshControl, Text, TouchableOpacity, View } from "react-native";
 
 export default function Page() {
   const { user } = useUser();
@@ -19,6 +20,13 @@ export default function Page() {
   console.log(user);
   const router = useRouter();
   const [showDeleteAlert, setShowDeleteAlert] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const onRefresh = async()=>{
+    setRefreshing(true)
+    await loadData();
+    setRefreshing(false)
+  }
 
   useEffect(() => {
     loadData();
@@ -41,7 +49,7 @@ export default function Page() {
     loadData();
   };
 
-  if (isLoading) return <PageLoader />;
+  if (isLoading && !refreshing) return <PageLoader />;
 
   return (
     <View style={styles.container}>
@@ -83,10 +91,15 @@ export default function Page() {
       <FlatList
         style={styles.transactionsList}
         contentContainerStyle={styles.transactionsListContent}
-        data={transactons?.payload?.data}
+      data={transactons?.payload?.data}
         renderItem={({ item }) => (
           <TransactionItem transaction={item} onDelete={handleDelete} />
         )}
+        ListEmptyComponent={<NoTransactionsFound />}
+        showsVerticalScrollIndicator={false}
+        // refreshing={isLoading}
+        // onRefresh={loadData}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh}/>}
       />
 
       <CustomAlert

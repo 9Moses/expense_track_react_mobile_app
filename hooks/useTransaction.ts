@@ -1,8 +1,7 @@
+import { API_URL } from "@/constants/api";
 import { useCallback, useState } from "react";
 import { Alert } from "react-native";
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL ?? '';
-//const API_URL ="http://localhost:5001/api"
 
 export const useTransaction = (userId: any) =>{
     const [transactons, setTransactions] = useState<any>([]);

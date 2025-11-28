@@ -3,6 +3,7 @@ import { Slot,  Stack } from "expo-router";
 import { ClerkProvider } from '@clerk/clerk-expo'
 import { tokenCache } from '@clerk/clerk-expo/token-cache'
 import { useEffect, useState } from "react";
+import { StatusBar } from "expo-status-bar";
 
 export default function RootLayout() {
 
@@ -12,6 +13,7 @@ export default function RootLayout() {
       {/* <Stack screenOptions={{ headerShown: false }} /> */}
       <Slot />
     </SafeScreen>
+    <StatusBar style="dark"/>
     </ClerkProvider>
   );
 }
